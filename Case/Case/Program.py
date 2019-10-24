@@ -1,3 +1,4 @@
+
 import sys
 import os
 import sqlite3
@@ -65,6 +66,9 @@ def show_all_cases():
     rows = cur.fetchall()
     for row in rows:
         print(row)
+
+    conn.commit()
+    conn.close()
     pass
   
 
@@ -94,10 +98,11 @@ def add_a_case():
     case_description = input("What is the case description? ")
     case_tag =  input("What is the tag?")
     case_date = input("Please format YYYY:MM:DD"  )
-    case_addition = "INSERT INTO Cases (id) VALUES (?)"
-    conn.execute(sql, (case_addition,))
+    sql = "INSERT INTO Cases (id,description, tags, date) VALUES (?,?,?,?)"
+    conn.execute(sql, (case_id,case_description,case_tag,case_date))
     conn.commit()
     conn.close()
+    
     
   
   
@@ -106,12 +111,17 @@ def modify_a_case():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
     conn = create_connection(db_name)
     cur = conn.cursor()
-    cursor.execute('''UPDATE users SET phone = ? WHERE id = ? ''',
-      (newphone, userid))
+    id_change = input("What is the ID?")
  
-    rows = cur.fetchall()
-    for row in rows:
-        print(row)
+    sql_cmd = "SELECT * FROM Cases WHERE id='{}'".format(id_change)
+    cur.execute(sql_cmd)
+    for row in c.fetchall():
+        id = row[0]
+        description = row[1]
+
+    conn.commit()
+    conn.close()
+   
     pass
 
 
