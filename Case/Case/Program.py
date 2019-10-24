@@ -69,7 +69,13 @@ def search_all_cases():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
     conn = create_connection(db_name)
     cur = conn.cursor()
-    
+    search = input("Please search for your desired case:")
+    cur.execute("SELECT * FROM Cases WHERE tags LIKE '%open%'")
+    cur.execute("SELECT * FROM Cases WHERE tags LIKE '%closed%'")
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
+    pass
     
 
 def add_a_case():
