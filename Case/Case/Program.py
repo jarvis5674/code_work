@@ -1,4 +1,5 @@
 
+
 import sys
 import os
 import sqlite3
@@ -111,13 +112,12 @@ def modify_a_case():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
     conn = create_connection(db_name)
     cur = conn.cursor()
-    id_change = input("What is the ID?")
- 
-    sql_cmd = "SELECT * FROM Cases WHERE id='{}'".format(id_change)
-    cur.execute(sql_cmd)
-    for row in c.fetchall():
-        id = row[0]
-        description = row[1]
+    update = input('Would you like to change the tag or description[y/N]: ')
+    if update.lower() == 'y':
+        old_tag= input('Old tag: ')
+        new_tag = input('Update your tag: ')
+        cur.execute('UPDATE Cases SET tags=? WHERE tags=?', (new_tag, old_tag))
+    
 
     conn.commit()
     conn.close()
@@ -127,4 +127,5 @@ def modify_a_case():
 
 
 
+main()
 main()
