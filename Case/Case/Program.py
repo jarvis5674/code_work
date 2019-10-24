@@ -1,7 +1,6 @@
 import sys
 import os
 import sqlite3
-import re
 
 
        
@@ -39,6 +38,7 @@ def main():
         menu()
     
 
+
 def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
@@ -70,11 +70,15 @@ def search_all_cases():
     conn = create_connection(db_name)
     cur = conn.cursor()
     search = input("Please search for your desired case:")
+    cur.execute(f"SELECT * FROM Cases WHERE description LIKE '%{search}%'")
     cur.execute("SELECT * FROM Cases WHERE tags LIKE '%open%'")
     cur.execute("SELECT * FROM Cases WHERE tags LIKE '%closed%'")
     rows = cur.fetchall()
     for row in rows:
         print(row)
+
+    conn.commit()
+    conn.close()
     pass
     
 
@@ -82,11 +86,18 @@ def add_a_case():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
     conn = create_connection(db_name)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM Cases")
-    rows = cur.fetchall()
-    for row in rows:
-        print(row)
+    case_id = input("What is the Case ID? ")
+    case_description = input("What is the case description? ")
+    case_tag =  input("What is the tag?")
+    case_date = input("Please format YYYY:MM:DD"  )
+    cur.execute('''INSERT INTO Cases(id,description,tags, date)
+              VALUES(?,?,?,?)''', [case_description])
+    
+    conn.commit()
+    conn.close()
     pass
+    
+  
   
 
 def modify_a_case():
