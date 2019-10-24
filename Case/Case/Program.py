@@ -14,7 +14,7 @@ def main():
 
     case_selection = input("""
                       A: Show All Cases in Registry
-                      B: Search for All Cases
+                      B: Search for Cases
                       C: Add a Case
                       D: Modify a Case
                       Q: Quit
@@ -37,14 +37,18 @@ def main():
         print("Please try again")
         menu()
     
+CASE_TABLE_NAME = "Case" 
+CASE_TABLE_FIELDS = [
+    ("id",          "VARCHAR"),
+    ("description", "VARCHAR"),
+    ("tags",        "VARCHAR"),
+    ("date",        "VARCHAR"),
+]
 
 
 def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by the db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
+    
+    
     conn = None
     try:
         conn = sqlite3.connect(db_file)
@@ -90,12 +94,10 @@ def add_a_case():
     case_description = input("What is the case description? ")
     case_tag =  input("What is the tag?")
     case_date = input("Please format YYYY:MM:DD"  )
-    cur.execute('''INSERT INTO Cases(id,description,tags, date)
-              VALUES(?,?,?,?)''', [case_description])
-    
+    case_addition = "INSERT INTO Cases (id) VALUES (?)"
+    conn.execute(sql, (case_addition,))
     conn.commit()
     conn.close()
-    pass
     
   
   
@@ -104,7 +106,9 @@ def modify_a_case():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
     conn = create_connection(db_name)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM Cases")
+    cursor.execute('''UPDATE users SET phone = ? WHERE id = ? ''',
+      (newphone, userid))
+ 
     rows = cur.fetchall()
     for row in rows:
         print(row)
