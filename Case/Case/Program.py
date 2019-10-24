@@ -69,12 +69,8 @@ def search_all_cases():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
     conn = create_connection(db_name)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM Cases")
-    rows = cur.fetchall()
-    for row in rows:
-        print(row)
-    pass
-
+    
+    
 
 def add_a_case():
     db_name = "/Users/jarvisbigger/Downloads/database.db"
@@ -97,37 +93,6 @@ def modify_a_case():
         print(row)
     pass
 
-def show_id():
-        """ local function for showing all values from table Case"""
-        show_statement = "SELECT * FROM id;"
-        cur.execute(show_statement)
-        rows = cur.fetchall()
-
-        print(rows)
-
-def show_description():
-        """ Local function for showing all values form table Case """
-        show_statement = "SELECT * FROM description ORDER BY id DESC"
-        cur.execute(show_statement)
-        rows = cur.fetchall()
-
-        print(rows)
-
-def show_tags():
-        """ local function for showing all values from table Case"""
-        show_statement = "SELECT * FROM tags"
-        cur.execute(show_statement)
-        rows = cur.fetchall()
-
-        print(rows)
-
-def show_date():
-        """ local function for showing all values from table Case"""
-        show_statement = "SELECT * FROM date"
-        cur.execute(show_statement)
-        rows = cur.fetchall()
-
-        print(rows)
 
 
 
