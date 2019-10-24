@@ -1,15 +1,5 @@
 
-
-import sys
-import os
-import sqlite3
-
-
-       
-def main():
-
-
-    def menu():
+def menu():
         print("MAIN MENU")
     
     print()
@@ -46,6 +36,13 @@ CASE_TABLE_FIELDS = [
     ("tags",        "VARCHAR"),
     ("date",        "VARCHAR"),
 ]
+
+
+fout = open('registry.txt','wt')
+fout.write('Updated Registry')
+fout.write('\n')
+fout.write('Id Days')
+fout.write('\n')
 
 
 def create_connection(db_file):
@@ -117,7 +114,12 @@ def modify_a_case():
         old_tag= input('Old tag: ')
         new_tag = input('Update your tag: ')
         cur.execute('UPDATE Cases SET tags=? WHERE tags=?', (new_tag, old_tag))
-    
+    else:
+        updated = input("Please change your description. Please enter") 
+        old_description = input('Old description: ')
+        new_description = input('Update your description: ')
+        cur.execute('UPDATE Cases SET description=? WHERE description=?', (new_description, old_description))
+
 
     conn.commit()
     conn.close()
@@ -127,5 +129,4 @@ def modify_a_case():
 
 
 
-main()
 main()
