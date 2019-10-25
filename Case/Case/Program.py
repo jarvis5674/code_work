@@ -1,5 +1,14 @@
 
-def menu():
+import sys
+import os
+import sqlite3
+
+
+       
+def main():
+
+
+    def menu():
         print("MAIN MENU")
     
     print()
@@ -15,7 +24,7 @@ def menu():
                       Please enter your choice: """)
 
     if case_selection == "A" or case_selection =="a":
-        show_all_cases()
+        print(show_all_cases())
     elif case_selection == "B" or case_selection =="b":
         search_all_cases()
     elif case_selection == "C" or case_selection =="c":
@@ -23,7 +32,9 @@ def menu():
     elif case_selection=="D" or case_selection=="d":
         modify_a_case()
     elif case_selection=="Q" or case_selection=="q":
-        sys.exit
+        write_to_file()
+        sys.exit()
+
     else:
         print("Unknown Error")
         print("Please try again")
@@ -38,11 +49,11 @@ CASE_TABLE_FIELDS = [
 ]
 
 
-fout = open('registry.txt','wt')
-fout.write('Updated Registry')
-fout.write('\n')
-fout.write('Id Days')
-fout.write('\n')
+
+def write_to_file():
+    fout = open('/Users/jarvisbigger/code_work/code_work-master/Case/Case/registry.txt','w')
+    fout.write(str(show_all_cases()))
+    fout.close()
 
 
 def create_connection(db_file):
@@ -62,12 +73,11 @@ def show_all_cases():
     cur = conn.cursor()
     cur.execute("SELECT * FROM Cases")
     rows = cur.fetchall()
-    for row in rows:
-        print(row)
+   
 
     conn.commit()
     conn.close()
-    pass
+    return rows
   
 
 
@@ -76,9 +86,7 @@ def search_all_cases():
     conn = create_connection(db_name)
     cur = conn.cursor()
     search = input("Please search for your desired case:")
-    cur.execute(f"SELECT * FROM Cases WHERE description LIKE '%{search}%'")
     cur.execute("SELECT * FROM Cases WHERE tags LIKE '%open%'")
-    cur.execute("SELECT * FROM Cases WHERE tags LIKE '%closed%'")
     rows = cur.fetchall()
     for row in rows:
         print(row)
@@ -128,5 +136,6 @@ def modify_a_case():
 
 
 
-
+while True:
+    main()
 main()
